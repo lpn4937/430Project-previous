@@ -9,7 +9,7 @@ const makerPage = (req, res) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    return res.render('app', { domo: docs });
+    return res.render('app', { domos: docs });
   });
 };
 
@@ -21,7 +21,7 @@ const makeDomo = (req, res) => {
   const domoData = {
     name: req.body.name,
     age: req.body.age,
-    owner: req.body.account._id,
+    owner: req.session.account._id,
   };
 
   const newDomo = new Domo.DomoModel(domoData);
