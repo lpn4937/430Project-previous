@@ -1,7 +1,5 @@
 "use strict";
 
-var _Account = require("../../server/controllers/Account");
-
 var handleLogin = function handleLogin(e) {
     e.preventDefault();
 
@@ -117,7 +115,7 @@ var setup = function setup(csrf) {
 
 var getToken = function getToken() {
     sendAjax('GET', '/getToken', null, function (result) {
-        setup(retult.csrfToken);
+        setup(result.csrfToken);
     });
 };
 

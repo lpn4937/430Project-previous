@@ -1,6 +1,6 @@
 "use strict";
 
-var handleDemo = function handleDemo(e) {
+var handleDomo = function handleDomo(e) {
     e.preventDefault();
 
     $("#domoMessage").animate({ width: 'hide' }, 350);

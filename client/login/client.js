@@ -1,5 +1,3 @@
-import { login } from "../../server/controllers/Account";
-
 const handleLogin = (e) => {
     e.preventDefault();
 
@@ -101,7 +99,7 @@ const setup = (csrf) => {
 
 const getToken = () => {
     sendAjax('GET','/getToken', null, (result) => {
-        setup(retult.csrfToken);
+        setup(result.csrfToken);
     });
 };
 
