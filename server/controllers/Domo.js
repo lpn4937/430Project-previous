@@ -60,10 +60,8 @@ const getDomos = (request, response) => {
   });
 };
 
-const removeDomo = (request, response) => {
-  Domo.DomoModel.remove({ name: request.query.name }, (err) => {
-    
-  });
+const removeDomo = (request) => {
+  Domo.DomoModel.remove({ name: request.query.name });
 };
 
 
