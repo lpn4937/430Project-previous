@@ -73,9 +73,7 @@ app.use((err, req, res, next) => {
 });
 
 
-
 router(app);
-
 
 
 app.listen(port, (err) => {

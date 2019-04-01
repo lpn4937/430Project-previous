@@ -18,16 +18,15 @@ const makeDomo = (req, res) => {
     return res.status(400).json({ error: 'RAWR! Both name and age are required' });
   }
 
-  if (!req.body.perception){
-    req.body.perception = Math.random(1,21)
-  }
-
   const domoData = {
     name: req.body.name,
     age: req.body.age,
     perception: req.body.perception,
     owner: req.session.account._id,
   };
+  if (!req.body.perception) {
+    domoData.perception = Math.random(1, 21);
+  }
 
   const newDomo = new Domo.DomoModel(domoData);
 
@@ -61,13 +60,12 @@ const getDomos = (request, response) => {
   });
 };
 
-const removeDomo = (request, response, params) => {
-  const req = request;
-
-  Domo.DomoModel.remove({name: req.query.name}, (err) => {
-    if(err) return handleError(err);
+const removeDomo = (request, response) => {
+  Domo.DomoModel.remove({ name: request.query.name }, (err) => {
+    console.log(err);
+    return response.status(400).json({ error: 'An error occurred' });
   });
-}
+};
 
 
 module.exports.makerPage = makerPage;
