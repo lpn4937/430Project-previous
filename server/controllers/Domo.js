@@ -62,8 +62,7 @@ const getDomos = (request, response) => {
 
 const removeDomo = (request, response) => {
   Domo.DomoModel.remove({ name: request.query.name }, (err) => {
-    console.log(err);
-    return response.status(400).json({ error: 'An error occurred' });
+    
   });
 };
 
