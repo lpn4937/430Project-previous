@@ -47,10 +47,10 @@ nav:nth-child(1) {
     background-color: #66bdff;
 }
 
-.domoForm {
+.domoForm, .removeForm {
     border: 2px solid #338acc;
     height: 35px;
-    width: 700px;
+    width: 1000px;
     margin-top:0px;
     padding-top:10px;
     background-color: #55acee;
@@ -252,6 +252,12 @@ h3.domoAge {
     padding-right: 40px;
     font-size: 1.5em;
 }
+/*h3.domoPerception {
+    width: 40px;
+    font-weight: bold;
+    padding-right: 10px;
+    font-size: 1.5em;
+}*/
 
 .domo:first-child {
     margin-top: 10px;

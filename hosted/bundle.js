@@ -33,8 +33,46 @@ var DomoForm = function DomoForm(props) {
             "Age: "
         ),
         React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement(
+            "label",
+            { htmlFor: "perception" },
+            "Perception: "
+        ),
+        React.createElement("input", { id: "domoPerception", type: "text", name: "perception", placeholder: "Domo Percpetion" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+    );
+};
+
+var handleRemoveDomo = function handleRemoveDomo(e) {
+    e.preventDefault();
+
+    $("#domoMessage").animate({ width: 'hide' }, 350);
+
+    if ($("#domoRemoveName").val() == '') {
+        handleError("RAWR! All fields are required");
+        return false;
+    }
+
+    sendAjax('GET', '/removeDomo', $("#removeForm").serialize(), function (data) {
+        loadDomosFromServer();
+    });
+    loadDomosFromServer();
+    return false;
+};
+
+var RemoveDomoForm = function RemoveDomoForm(props) {
+    return React.createElement(
+        "form",
+        { id: "removeForm", onSubmit: handleRemoveDomo, name: "domoForm", action: "/maker", method: "POST", className: "domoForm" },
+        React.createElement(
+            "label",
+            { htmlFor: "name" },
+            "Name: "
+        ),
+        React.createElement("input", { id: "domoRemoveName", type: "text", name: "name", placeholder: "Domo Name" }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Remove Domo" })
     );
 };
 
@@ -65,7 +103,14 @@ var DomoList = function DomoList(props) {
             React.createElement(
                 "h3",
                 { className: "domoAge" },
-                "Age: "
+                "Age: ",
+                domo.age
+            ),
+            React.createElement(
+                "h3",
+                { className: "domoPerception" },
+                "Perception: ",
+                domo.perception
             )
         );
     });
@@ -85,6 +130,7 @@ var loadDomosFromServer = function loadDomosFromServer() {
 
 var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
+    ReactDOM.render(React.createElement(RemoveDomoForm, { csrf: csrf }), document.querySelector("#removeDomo"));
 
     ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
 

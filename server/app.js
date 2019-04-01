@@ -72,7 +72,11 @@ app.use((err, req, res, next) => {
   return false;
 });
 
+
+
 router(app);
+
+
 
 app.listen(port, (err) => {
   if (err) {
