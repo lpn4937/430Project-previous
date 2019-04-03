@@ -14,19 +14,16 @@ const makerPage = (req, res) => {
 };
 
 const makeSong = (req, res) => {
-  if (!req.body.name || !req.body.age) {
+  if (!req.body.name || !req.body.artist || !req.body.album) {
     return res.status(400).json({ error: 'RAWR! Both name and age are required' });
   }
 
   const songData = {
     name: req.body.name,
-    age: req.body.age,
-    perception: req.body.perception,
+    artist: req.body.artist,
+    album: req.body.album,
     owner: req.session.account._id,
   };
-  if (!req.body.perception) {
-    songData.perception = Math.random(1, 21);
-  }
 
   const newSong = new Song.SongModel(songData);
 

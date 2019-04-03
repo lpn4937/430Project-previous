@@ -3,7 +3,7 @@ const handleSong = (e) => {
 
     $("#songMessage").animate({width:'hide'},350);
     
-    if($("#songName").val() == '' || $("#songAge").val() == ''){
+    if($("#songName").val() == '' || $("#songArtist").val() == '' || $("#songAlbum").val() == ''){
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -20,10 +20,10 @@ const SongForm = (props) => {
         <form id="songForm" onSubmit={handleSong} name="songForm" action="/maker" method="POST" className = "songForm">
             <label htmlFor="name">Name: </label>
             <input id="songName" type="text" name="name" placeholder="Song Name" />
-            <label htmlFor="age">Age: </label>
-            <input id="songAge" type="text" name="age" placeholder="Song Age" />
-            <label htmlFor="perception">Perception: </label>
-            <input id="songPerception" type="text" name="perception" placeholder="Song Percpetion" />
+            <label htmlFor="artist">Artist: </label>
+            <input id="songArtist" type="text" name="artist" placeholder="Song Artist" />
+            <label htmlFor="album">Album: </label>
+            <input id="songAlbum" type="text" name="album" placeholder="Song Album" />
             <input type="hidden" name="_csrf" value={props.csrf} />
             <input className="makeSongSubmit" type="submit" value="Make Song" />
         </form>
@@ -70,7 +70,7 @@ const SongList = function(props) {
     const songNodes = props.songs.map(function(song){
         return (
             <div key={song._id} className="song">
-                <img src="/assets/img/songface.jpeg" alt="song face" className="songFace" />
+                <img src="/assets/img/domoface.jpeg" alt="song face" className="songFace" />
                 <h3 className="songName">Name: {song.name}</h3>
                 <h3 className="songArtist">Artist: {song.artist}</h3>
                 <h3 className="songAlbum">Album: {song.album}</h3>

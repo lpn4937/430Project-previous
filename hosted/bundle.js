@@ -5,7 +5,7 @@ var handleSong = function handleSong(e) {
 
     $("#songMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#songName").val() == '' || $("#songAge").val() == '') {
+    if ($("#songName").val() == '' || $("#songArtist").val() == '' || $("#songAlbum").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -29,16 +29,16 @@ var SongForm = function SongForm(props) {
         React.createElement("input", { id: "songName", type: "text", name: "name", placeholder: "Song Name" }),
         React.createElement(
             "label",
-            { htmlFor: "age" },
-            "Age: "
+            { htmlFor: "artist" },
+            "Artist: "
         ),
-        React.createElement("input", { id: "songAge", type: "text", name: "age", placeholder: "Song Age" }),
+        React.createElement("input", { id: "songArtist", type: "text", name: "artist", placeholder: "Song Artist" }),
         React.createElement(
             "label",
-            { htmlFor: "perception" },
-            "Perception: "
+            { htmlFor: "album" },
+            "Album: "
         ),
-        React.createElement("input", { id: "songPerception", type: "text", name: "perception", placeholder: "Song Percpetion" }),
+        React.createElement("input", { id: "songAlbum", type: "text", name: "album", placeholder: "Song Album" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "makeSongSubmit", type: "submit", value: "Make Song" })
     );
@@ -93,7 +93,7 @@ var SongList = function SongList(props) {
         return React.createElement(
             "div",
             { key: song._id, className: "song" },
-            React.createElement("img", { src: "/assets/img/songface.jpeg", alt: "song face", className: "songFace" }),
+            React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "song face", className: "songFace" }),
             React.createElement(
                 "h3",
                 { className: "songName" },
