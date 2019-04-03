@@ -1,111 +1,111 @@
-const handleDomo = (e) => {
+const handleSong = (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'},350);
+    $("#songMessage").animate({width:'hide'},350);
     
-    if($("#domoName").val() == '' || $("#domoAge").val() == ''){
+    if($("#songName").val() == '' || $("#songAge").val() == ''){
         handleError("RAWR! All fields are required");
         return false;
     }
 
-    sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function() {
-        loadDomosFromServer();
+    sendAjax('POST', $("#songForm").attr("action"), $("#songForm").serialize(), function() {
+        loadSongsFromServer();
     });
 
     return false;
 }
 
-const DomoForm = (props) => {
+const SongForm = (props) => {
     return (
-        <form id="domoForm" onSubmit={handleDomo} name="domoForm" action="/maker" method="POST" className = "domoForm">
+        <form id="songForm" onSubmit={handleSong} name="songForm" action="/maker" method="POST" className = "songForm">
             <label htmlFor="name">Name: </label>
-            <input id="domoName" type="text" name="name" placeholder="Domo Name" />
+            <input id="songName" type="text" name="name" placeholder="Song Name" />
             <label htmlFor="age">Age: </label>
-            <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
+            <input id="songAge" type="text" name="age" placeholder="Song Age" />
             <label htmlFor="perception">Perception: </label>
-            <input id="domoPerception" type="text" name="perception" placeholder="Domo Percpetion" />
+            <input id="songPerception" type="text" name="perception" placeholder="Song Percpetion" />
             <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+            <input className="makeSongSubmit" type="submit" value="Make Song" />
         </form>
     );
 };
 
-const handleRemoveDomo = (e) => {
+const handleRemoveSong = (e) => {
     e.preventDefault();
     
-    $("#domoMessage").animate({width:'hide'},350);
+    $("#songMessage").animate({width:'hide'},350);
     
-    if($("#domoRemoveName").val() == ''){
+    if($("#songRemoveName").val() == ''){
         handleError("RAWR! All fields are required");
         return false;
     }
 
-    sendAjax('GET','/removeDomo',$("#removeForm").serialize(),(data)=>{
-        loadDomosFromServer();
+    sendAjax('GET','/removeSong',$("#removeForm").serialize(),(data)=>{
+        loadSongsFromServer();
     });
-    loadDomosFromServer();
+    loadSongsFromServer();
     return false;
 }
 
-const RemoveDomoForm = (props) => {
+const RemoveSongForm = (props) => {
     return (
-        <form id="removeForm" onSubmit={handleRemoveDomo} name="domoForm" action="/maker" method="POST" className = "domoForm">
+        <form id="removeForm" onSubmit={handleRemoveSong} name="songForm" action="/maker" method="POST" className = "songForm">
             <label htmlFor="name">Name: </label>
-            <input id="domoRemoveName" type="text" name="name" placeholder="Domo Name" />
+            <input id="songRemoveName" type="text" name="name" placeholder="Song Name" />
             <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Remove Domo" />
+            <input className="makeSongSubmit" type="submit" value="Remove Song" />
         </form>
     );
 };
 
-const DomoList = function(props) {
-    if(props.domos.length === 0) {
+const SongList = function(props) {
+    if(props.songs.length === 0) {
         return (
-            <div className="domoList">
-                <h3 className="emptyDomo">No Domos yet</h3>
+            <div className="songList">
+                <h3 className="emptySong">No Songs yet</h3>
             </div>
         );
     }
 
-    const domoNodes = props.domos.map(function(domo){
+    const songNodes = props.songs.map(function(song){
         return (
-            <div key={domo._id} className="domo">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-                <h3 className="domoName">Name: {domo.name}</h3>
-                <h3 className="domoAge">Age: {domo.age}</h3>
-                <h3 className="domoPerception">Perception: {domo.perception}</h3>
+            <div key={song._id} className="song">
+                <img src="/assets/img/songface.jpeg" alt="song face" className="songFace" />
+                <h3 className="songName">Name: {song.name}</h3>
+                <h3 className="songArtist">Artist: {song.artist}</h3>
+                <h3 className="songAlbum">Album: {song.album}</h3>
             </div>
         );
     });
 
     return (
-        <div className="domoList">
-            {domoNodes}
+        <div className="songList">
+            {songNodes}
         </div>
     );
 };
 
-const loadDomosFromServer = () => {
-    sendAjax('GET','/getDomos',null,(data)=>{
+const loadSongsFromServer = () => {
+    sendAjax('GET','/getSongs',null,(data)=>{
         ReactDOM.render(
-            <DomoList domos={data.domos} />, document.querySelector("#domos")
+            <SongList songs={data.songs} />, document.querySelector("#songs")
         );
     });
 };
 
 const setup = function(csrf) {
     ReactDOM.render(
-        <DomoForm csrf={csrf} />, document.querySelector("#makeDomo")
+        <SongForm csrf={csrf} />, document.querySelector("#makeSong")
     );
     ReactDOM.render(
-        <RemoveDomoForm csrf={csrf} />, document.querySelector("#removeDomo")
+        <RemoveSongForm csrf={csrf} />, document.querySelector("#removeSong")
     );
 
     ReactDOM.render(
-        <DomoList domos={[]} />, document.querySelector("#domos")
+        <SongList songs={[]} />, document.querySelector("#songs")
     );
 
-    loadDomosFromServer();
+    loadSongsFromServer();
 };
 
 const getToken = () => {

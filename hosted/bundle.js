@@ -1,140 +1,140 @@
 "use strict";
 
-var handleDomo = function handleDomo(e) {
+var handleSong = function handleSong(e) {
     e.preventDefault();
 
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+    $("#songMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+    if ($("#songName").val() == '' || $("#songAge").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
 
-    sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
-        loadDomosFromServer();
+    sendAjax('POST', $("#songForm").attr("action"), $("#songForm").serialize(), function () {
+        loadSongsFromServer();
     });
 
     return false;
 };
 
-var DomoForm = function DomoForm(props) {
+var SongForm = function SongForm(props) {
     return React.createElement(
         "form",
-        { id: "domoForm", onSubmit: handleDomo, name: "domoForm", action: "/maker", method: "POST", className: "domoForm" },
+        { id: "songForm", onSubmit: handleSong, name: "songForm", action: "/maker", method: "POST", className: "songForm" },
         React.createElement(
             "label",
             { htmlFor: "name" },
             "Name: "
         ),
-        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
+        React.createElement("input", { id: "songName", type: "text", name: "name", placeholder: "Song Name" }),
         React.createElement(
             "label",
             { htmlFor: "age" },
             "Age: "
         ),
-        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement("input", { id: "songAge", type: "text", name: "age", placeholder: "Song Age" }),
         React.createElement(
             "label",
             { htmlFor: "perception" },
             "Perception: "
         ),
-        React.createElement("input", { id: "domoPerception", type: "text", name: "perception", placeholder: "Domo Percpetion" }),
+        React.createElement("input", { id: "songPerception", type: "text", name: "perception", placeholder: "Song Percpetion" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+        React.createElement("input", { className: "makeSongSubmit", type: "submit", value: "Make Song" })
     );
 };
 
-var handleRemoveDomo = function handleRemoveDomo(e) {
+var handleRemoveSong = function handleRemoveSong(e) {
     e.preventDefault();
 
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+    $("#songMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoRemoveName").val() == '') {
+    if ($("#songRemoveName").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
 
-    sendAjax('GET', '/removeDomo', $("#removeForm").serialize(), function (data) {
-        loadDomosFromServer();
+    sendAjax('GET', '/removeSong', $("#removeForm").serialize(), function (data) {
+        loadSongsFromServer();
     });
-    loadDomosFromServer();
+    loadSongsFromServer();
     return false;
 };
 
-var RemoveDomoForm = function RemoveDomoForm(props) {
+var RemoveSongForm = function RemoveSongForm(props) {
     return React.createElement(
         "form",
-        { id: "removeForm", onSubmit: handleRemoveDomo, name: "domoForm", action: "/maker", method: "POST", className: "domoForm" },
+        { id: "removeForm", onSubmit: handleRemoveSong, name: "songForm", action: "/maker", method: "POST", className: "songForm" },
         React.createElement(
             "label",
             { htmlFor: "name" },
             "Name: "
         ),
-        React.createElement("input", { id: "domoRemoveName", type: "text", name: "name", placeholder: "Domo Name" }),
+        React.createElement("input", { id: "songRemoveName", type: "text", name: "name", placeholder: "Song Name" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Remove Domo" })
+        React.createElement("input", { className: "makeSongSubmit", type: "submit", value: "Remove Song" })
     );
 };
 
-var DomoList = function DomoList(props) {
-    if (props.domos.length === 0) {
+var SongList = function SongList(props) {
+    if (props.songs.length === 0) {
         return React.createElement(
             "div",
-            { className: "domoList" },
+            { className: "songList" },
             React.createElement(
                 "h3",
-                { className: "emptyDomo" },
-                "No Domos yet"
+                { className: "emptySong" },
+                "No Songs yet"
             )
         );
     }
 
-    var domoNodes = props.domos.map(function (domo) {
+    var songNodes = props.songs.map(function (song) {
         return React.createElement(
             "div",
-            { key: domo._id, className: "domo" },
-            React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
+            { key: song._id, className: "song" },
+            React.createElement("img", { src: "/assets/img/songface.jpeg", alt: "song face", className: "songFace" }),
             React.createElement(
                 "h3",
-                { className: "domoName" },
+                { className: "songName" },
                 "Name: ",
-                domo.name
+                song.name
             ),
             React.createElement(
                 "h3",
-                { className: "domoAge" },
-                "Age: ",
-                domo.age
+                { className: "songArtist" },
+                "Artist: ",
+                song.artist
             ),
             React.createElement(
                 "h3",
-                { className: "domoPerception" },
-                "Perception: ",
-                domo.perception
+                { className: "songAlbum" },
+                "Album: ",
+                song.album
             )
         );
     });
 
     return React.createElement(
         "div",
-        { className: "domoList" },
-        domoNodes
+        { className: "songList" },
+        songNodes
     );
 };
 
-var loadDomosFromServer = function loadDomosFromServer() {
-    sendAjax('GET', '/getDomos', null, function (data) {
-        ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+var loadSongsFromServer = function loadSongsFromServer() {
+    sendAjax('GET', '/getSongs', null, function (data) {
+        ReactDOM.render(React.createElement(SongList, { songs: data.songs }), document.querySelector("#songs"));
     });
 };
 
 var setup = function setup(csrf) {
-    ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
-    ReactDOM.render(React.createElement(RemoveDomoForm, { csrf: csrf }), document.querySelector("#removeDomo"));
+    ReactDOM.render(React.createElement(SongForm, { csrf: csrf }), document.querySelector("#makeSong"));
+    ReactDOM.render(React.createElement(RemoveSongForm, { csrf: csrf }), document.querySelector("#removeSong"));
 
-    ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
+    ReactDOM.render(React.createElement(SongList, { songs: [] }), document.querySelector("#songs"));
 
-    loadDomosFromServer();
+    loadSongsFromServer();
 };
 
 var getToken = function getToken() {
